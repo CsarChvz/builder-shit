@@ -1,0 +1,12 @@
+{
+  "window.zoomLevel": 2,
+  "files.autoSave": "afterDelay",
+  "git.enableSmartCommit": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "eslint.alwaysShowStatus": true,
+  "eslint.validate": ["javascript"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}
