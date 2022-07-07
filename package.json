@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev-express": "nodemon server/server.js --watch server"
   },
   "dependencies": {
     "@emotion/cache": "latest",

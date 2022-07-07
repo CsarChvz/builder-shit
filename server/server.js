@@ -12,11 +12,10 @@ app.prepare().then(() => {
   const server = express();
 
   server.get('/', (req, res) => {
-    res.send('My express server');
+    res.send('My express server 101');
   });
 
   server.get('*', (req, res) => handle(req, res));
-
   server.listen(port, (err) => {
     if (err) throw err;
     // eslint-disable-next-line no-console
