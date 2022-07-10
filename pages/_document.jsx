@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/google-font-display */
 /* eslint-disable react/no-danger */
 import React from 'react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
@@ -30,13 +29,14 @@ class MyDocument extends Document {
       originalRenderPage({
         // eslint-disable-next-line react/display-name
         enhanceApp: (App) =>
-          // eslint-disable-next-line func-names
           function (props) {
             return <App emotionCache={cache} {...props} />;
           },
       });
 
     const initialProps = await Document.getInitialProps(ctx);
+    // This is important. It prevents emotion to render invalid HTML.
+    // See https://github.com/mui-org/material-ui/issues/26561#issuecomment-855286153
     const chunks = extractCriticalToChunks(initialProps.html);
 
     const emotionStyleTags = chunks.styles.map((style) => (
@@ -57,7 +57,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en" style={{ height: '100%' }}>
+      <Html lang="en" style={{ height: '100%', backgroundColor: '#f4f4f4' }}>
         <Head>
           <meta charSet="utf-8" />
           <meta name="google" content="notranslate" />
@@ -70,7 +70,7 @@ class MyDocument extends Document {
 
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400:latin"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400:latin&display=optional"
           />
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
           <link

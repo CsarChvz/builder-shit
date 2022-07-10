@@ -1,38 +1,47 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Head from 'next/head';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import App from 'next/app';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Head from 'next/head';
+
 import theme from '../src/theme';
-import createEmotionCache from '../src/createEmotionCache';
 import Header from '../components/Header';
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
+const propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired, // eslint-disable-line
+};
 
-export default function MyApp(props) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+class MyApp extends App {
+  render() {
+    const { Component, pageProps } = this.props;
 
-  return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Header {...pageProps} />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
-  );
+    // console.log(pageProps);
+
+    return (
+      <CacheProvider
+        value={createCache({
+          key: 'css',
+        })}
+      >
+        <ThemeProvider theme={theme}>
+          {/* ThemeProvider makes the theme available down the React tree thanks to React context. */}
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          </Head>
+          <CssBaseline />
+          <Header {...pageProps} />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </CacheProvider>
+    );
+  }
 }
 
-MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types, react/require-default-props
-  emotionCache: PropTypes.object,
-  // eslint-disable-next-line react/forbid-prop-types
-  pageProps: PropTypes.object.isRequired,
-};
+MyApp.propTypes = propTypes;
+
+export default MyApp;
