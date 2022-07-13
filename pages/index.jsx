@@ -14,6 +14,7 @@ const defaultProps = {
 };
 
 function Index({ user }) {
+  console.log(user.displayName);
   return (
     <div style={{ padding: '10px 45px' }}>
       <Head>
