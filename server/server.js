@@ -1,7 +1,10 @@
+// Modulos requieridos para el servidor y su conjuncion
+
 const express = require('express');
 const next = require('next');
 const mongoose = require('mongoose');
 
+const session = require('express-session');
 const User = require('./models/User');
 
 require('dotenv').config();
@@ -27,6 +30,19 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  const sess = {
+    name: process.env.SESSION_NAME,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+      domain: 'localhost',
+    },
+  };
+
+  server.use(session(sess));
   server.get('/', async (req, res) => {
     // const user = { email: 'team@builderbook.org' };
     const user = await User.findOne({ slug: 'team-builder-book' });
