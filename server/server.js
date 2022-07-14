@@ -1,10 +1,11 @@
-// Modulos requieridos para el servidor y su conjuncion
-
 const express = require('express');
 const next = require('next');
+
 const mongoose = require('mongoose');
 
 const session = require('express-session');
+const mongoSessionStore = require('connect-mongo');
+
 const User = require('./models/User');
 
 require('dotenv').config();
@@ -30,9 +31,18 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
+  const MongoStore = mongoSessionStore(session);
+
   const sess = {
     name: process.env.SESSION_NAME,
     secret: process.env.SESSION_SECRET,
+    // En el parametro de la session llamado "store"
+    // Este va a crear una instancia la cual crea un documento en la base de datos
+    // La cual guarda el id de la sesion y pone una fecha de expiración
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection,
+      ttl: 14 * 24 * 60 * 60, // save session 14 days
+    }),
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -43,8 +53,9 @@ app.prepare().then(() => {
   };
 
   server.use(session(sess));
+
   server.get('/', async (req, res) => {
-    // const user = { email: 'team@builderbook.org' };
+    req.session.foo = 'bar';
     const user = await User.findOne({ slug: 'team-builder-book' });
     app.render(req, res, '/', { user });
   });
@@ -53,7 +64,6 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
-    // eslint-disable-next-line no-console
     console.log(`> Ready on ${ROOT_URL}`);
   });
 });

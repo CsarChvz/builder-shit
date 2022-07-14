@@ -34,7 +34,7 @@ class MyApp extends App {
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           </Head>
           <CssBaseline />
-          <Header {...pageProps} />
+          <Header />
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>

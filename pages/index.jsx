@@ -15,7 +15,7 @@ const defaultProps = {
 
 function Index({ user }) {
   return (
-    <div style={{ padding: '10px 45px' }}>
+    <div style={{ padding: '10px 45px', backgroundColor: '#f4f4f4' }}>
       <Head>
         <title>Dashboard</title>
         <meta name="description" content="This is a description of the Index page" />
