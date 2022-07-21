@@ -3,7 +3,7 @@
   "files.autoSave": "afterDelay",
   "git.enableSmartCommit": true,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "eslint.alwaysShowStatus": true,
   "eslint.validate": ["javascript"],
   "editor.codeActionsOnSave": {

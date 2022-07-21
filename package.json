@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server/server.js --watch server",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "dev-express": "nodemon server/server.js --watch server"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/cache": "latest",
