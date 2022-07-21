@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Head from 'next/head';
 
-import theme from '../src/theme';
+import theme from '../lib/theme';
 import Header from '../components/Header';
 
 const propTypes = {

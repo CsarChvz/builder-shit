@@ -26,6 +26,21 @@ export default function withAuth(
   class App extends React.Component {
     static async getInitialProps(ctx) {
       // getInitialProps
+
+      const isFromServer = typeof window === 'undefined';
+      const user = ctx.req ? ctx.req.user : globalUser;
+
+      if (isFromServer && user) {
+        user._id = user._id.toString();
+      }
+
+      const props = { user, isFromServer };
+
+      if (BaseComponent.getInitialProps) {
+        Object.assign(props, await BaseComponent.getInitialProps(ctx)) || {};
+      }
+
+      return props;
     }
 
     componentDidMount() {
